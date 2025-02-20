@@ -35,8 +35,6 @@ env_remove:  ## Remove virtual environment
 sqllite_remove:	## Remove sqlite database
 	rm -f db.sqlite3
 
-env_recreate: sqllite_remove env_remove env pip_install migrations migrate superuser serve ## Recreate environment from scratch
-
 # -----------------------------------------------------------------------------
 # Pip
 # -----------------------------------------------------------------------------
@@ -57,9 +55,6 @@ pip_list:  ## Run pip list
 pip_freeze:  ## Run pipfreezer freeze
 	pipfreezer freeze  --verbose
 
-pip_upgrade:  ## Run pipfreezer upgrade
-	pipfreezer upgrade  --verbose
-
 # -----------------------------------------------------------------------------
 # Django
 # -----------------------------------------------------------------------------
@@ -78,15 +73,6 @@ migrate:  ## Apply migrations
 
 serve:  ## Run server
 	python3 manage.py runserver 127.0.0.1:8000
-
-show_urls:  ## Show urls
-	python3 manage.py show_urls
-
-shell:  ## Run shell
-	python3 manage.py shell_plus
-
-flush:  ## Flush database
-	python3 manage.py flush
 
 # -----------------------------------------------------------------------------
 # Testing
@@ -150,13 +136,6 @@ clean_coverage:  ## Clear coverage cache
 	rm -rf htmlcov
 
 clean_tests: clean_pytest_cache clean_ruff_cache clean_tox_cache clean_coverage  ## Clear pytest, ruff, tox, and coverage caches
-
-# -----------------------------------------------------------------------------
-# Miscellaneous
-# -----------------------------------------------------------------------------
-
-tree:  ## Show directory tree
-	tree -I 'build|dist|htmlcov|node_modules|migrations|contrib|__pycache__|*.egg-info|staticfiles|media'
 
 # -----------------------------------------------------------------------------
 # Deploy
