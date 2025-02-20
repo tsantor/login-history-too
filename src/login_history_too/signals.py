@@ -15,7 +15,6 @@ def track_user_login(sender, request, user, **kwargs):
 
     # Get ip address data
     ip_address, _ = get_client_ip(request)
-    ip_address = "97.103.99.63"
     ip_data = get_ip_info(ip_address) if ip_address else {}
 
     UserLogin.objects.create(

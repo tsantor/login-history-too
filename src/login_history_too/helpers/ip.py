@@ -11,6 +11,10 @@ logger = logging.getLogger(__name__)
 
 @functools.lru_cache(maxsize=1024)
 def get_ip_info(ip_address) -> dict:
+    """
+    Wrapper function to get IP data from the configured API. Ignores internal
+    and private IP addresses.
+    """
     if ip_address in settings.INTERNAL_IPS or is_private_ip(ip_address):
         logger.warning("IP address is internal or private: %s", ip_address)
         return {}

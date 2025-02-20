@@ -132,4 +132,4 @@ SITE_ID = 1
 # -------------------------------------------------------------------------------
 IPSTACK_ACCESS_KEY = env("IPSTACK_ACCESS_KEY")
 
-LOGIN_HISTORY_TOO = {"GEOLOCATION_METHOD": "login_history_too.utils.get_ip_info_free"}
+LOGIN_HISTORY_TOO = {"GEOLOCATION_METHOD": "login_history_too.utils.get_ip_info"}
