@@ -1,6 +1,6 @@
 # Login History Too
 
-![Coverage](https://img.shields.io/badge/coverage-97%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-74%25-brightgreen)
 
 ## Overview
 
