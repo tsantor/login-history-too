@@ -1,25 +1,5 @@
-from dataclasses import dataclass
-
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-
-@dataclass
-class IPAddressData:
-    """Dataclass for IP data."""
-
-    ip: str = ""
-    zip: int = 0
-    city: str = ""
-    type: str = ""
-    latitude: float = 0.0
-    longitude: float = 0.0
-    region_code: str = ""
-    region_name: str = ""
-    country_code: str = ""
-    country_name: str = ""
-    continent_code: str = ""
-    continent_name: str = ""
 
 
 class UserAgentMixin(models.Model):
@@ -109,12 +89,6 @@ class IPAddressMixin(models.Model):
 
     class Meta:
         abstract = True
-
-    def ip_parsed(self) -> IPAddressData:
-        """Return IP data as a dataclass."""
-        if self.ip_data:
-            return IPAddressData(**self.ip_data)
-        return IPAddressData()
 
     @property
     def location(self) -> str:

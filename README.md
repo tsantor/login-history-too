@@ -26,6 +26,13 @@ INSTALLED_APPS = (
 )
 ```
 
+If you want to override the `GEOLOCATION_METHOD` to use another geolocation API:
+
+```python
+LOGIN_HISTORY_TOO = {
+    "GEOLOCATION_METHOD": "login_history_too.utils.get_ip_info"
+}
+```
 
 ## Development
 

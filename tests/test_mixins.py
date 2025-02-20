@@ -1,7 +1,5 @@
 import pytest
 from django.db import models
-
-from login_history_too.dtos import IPAddressData
 from login_history_too.mixins import IPAddressMixin
 from login_history_too.mixins import UserAgentMixin
 
@@ -17,7 +15,7 @@ class FakeModel(UserAgentMixin, IPAddressMixin, models.Model):
         return "Fake Model"
 
 
-@pytest.fixture
+@pytest.fixture()
 def user_agent_mixin():
     mixin = FakeModel()
     mixin.ua_data = {
@@ -39,7 +37,7 @@ def test_user_agent_mixin(user_agent_mixin):
     assert user_agent_mixin.platform == "Mobile"
 
 
-@pytest.fixture
+@pytest.fixture()
 def ip_address_mixin():
     mixin = FakeModel()
     mixin.ip_address = "99.70.213.72"
@@ -61,9 +59,7 @@ def ip_address_mixin():
 
 
 def test_ip_address_mixin(ip_address_mixin):
-    ip_data = ip_address_mixin.ip_parsed()
-    assert isinstance(ip_data, IPAddressData)
-    assert ip_data.city == "Orlando"
-    assert ip_data.region_code == "FL"
-    assert ip_data.country_name == "United States"
+    assert ip_address_mixin.ip_data["city"] == "Orlando"
+    assert ip_address_mixin.ip_data["region_code"] == "FL"
+    assert ip_address_mixin.ip_data["country_name"] == "United States"
     assert ip_address_mixin.location == "Orlando, FL (United States)"

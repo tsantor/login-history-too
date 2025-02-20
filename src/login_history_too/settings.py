@@ -4,7 +4,7 @@ LOGIN_HISTORY_TOO setting. For example your project's
 `settings.py` file might look like this:
 
 LOGIN_HISTORY_TOO = {
-    "GEOLOCATION_METHOD": "login_history_too.utils.get_ip_data"
+    "GEOLOCATION_METHOD": "login_history_too.utils.get_ip_info"
 }
 
 This module provides the `api_settings` object, that is used to access
@@ -17,7 +17,7 @@ from django.test.signals import setting_changed
 from django.utils.module_loading import import_string
 
 DEFAULTS = {
-    "GEOLOCATION_METHOD": "login_history_too.utils.get_ip_data",
+    "GEOLOCATION_METHOD": "login_history_too.utils.get_ip_info",
 }
 
 
@@ -28,9 +28,7 @@ IMPORT_STRINGS = [
 
 
 # List of settings that have been removed
-REMOVED_SETTINGS = [
-    "REMOVED_SETTING",  # example only
-]
+REMOVED_SETTINGS = []
 
 SETTINGS_DOC = "TODO"  # TODO: Add link to documentation
 
@@ -66,7 +64,7 @@ class APISettings:
     accessed as properties. For example:
 
         from login_history_too.settings import api_settings
-        print(api_settings.MY_MODEL)
+        print(api_settings.GEOLOCATION_METHOD)
 
     Any setting with string import paths will be automatically resolved
     and return the class, rather than the string literal.

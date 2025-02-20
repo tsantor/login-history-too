@@ -20,3 +20,16 @@ def get_ip_info(ip_address: str) -> dict:
         return r.json()
     except JSONDecodeError:
         return {}
+
+
+def get_ip_info_free(ip_address: str) -> dict:
+    """Return IP data as a dict using the IP API."""
+    r = requests.get(
+        f"https://ipapi.co/{ip_address}/json/",
+        timeout=5,
+    )
+    r.raise_for_status()
+    try:
+        return r.json()
+    except JSONDecodeError:
+        return {}
