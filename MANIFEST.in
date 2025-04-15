@@ -6,3 +6,5 @@ include README.md
 # recursive-include requirements/ *.txt
 
 # recursive-include src/login_history_too/data/ *.toml
+
+recursive-include src/login_history_too/static *

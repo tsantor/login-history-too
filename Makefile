@@ -32,6 +32,8 @@ env:  ## Create virtual environment
 env_remove:  ## Remove virtual environment
 	rm -rf .venv
 
+env_from_scratch: env_remove env pip_install  ## Create environment from scratch
+
 sqllite_remove:	## Remove sqlite database
 	rm -f db.sqlite3
 
@@ -142,10 +144,11 @@ clean_tests: clean_pytest_cache clean_ruff_cache clean_tox_cache clean_coverage 
 # -----------------------------------------------------------------------------
 
 dist: clean ## Builds source and wheel package
-	uv build
+	# python3 -m build
+	uv run python -m build
 
 twine_upload_test: dist ## Upload package to pypi test
-	twine upload dist/* -r pypitest
+	uv run twine upload dist/* -r pypitest
 
 twine_upload: dist ## Package and upload a release
 	twine upload dist/*

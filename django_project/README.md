@@ -1,3 +1,3 @@
 ## Example Project
 
-This is for local development use only.
+Bare minimum django project to facilitate this Django app development.
