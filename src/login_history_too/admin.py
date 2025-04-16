@@ -27,12 +27,10 @@ class UserLoginAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            "all": (
-                "//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css",
-            ),
+            "all": ("login_history_too/3rd-party/highlightjs/default.min.css",),
         }
         js = (
-            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js",
-            "login_history_too/js/ace-builds/ace.js",
+            "login_history_too/3rd-party/highlightjs/highlight.min.js",
+            "login_history_too/3rd-party/ace-builds/ace.js",
             "login_history_too/js/logins.js",
         )

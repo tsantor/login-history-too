@@ -7,7 +7,7 @@ const logins = {
    * Turn specific textareas into an ACE editor
    */
   aceEditor: function () {
-    ace.config.set('basePath', '/static/js/ace-builds');
+    ace.config.set('basePath', '/static/3rd-party/ace-builds');
 
     function prettifyJSON(string, indent = 2) {
       try {
@@ -85,22 +85,22 @@ const logins = {
   },
 
   initAce: function () {
-    // const uaDataElement = document.getElementById('id_ua_data');
-    // if (uaDataElement) {
-    //   uaDataElement.setAttribute('data-editor', 'json');
-    //   uaDataElement.setAttribute('data-gutter', 'true');
-    // }
-    // const ipDataElement = document.getElementById('id_ip_data');
-    // if (ipDataElement) {
-    //   ipDataElement.setAttribute('data-editor', 'json');
-    //   ipDataElement.setAttribute('data-gutter', 'true');
-    // }
-    // scans.aceEditor();
+    const uaDataElement = document.getElementById('id_ua_data');
+    if (uaDataElement) {
+      uaDataElement.setAttribute('data-editor', 'json');
+      uaDataElement.setAttribute('data-gutter', 'true');
+    }
+    const ipDataElement = document.getElementById('id_ip_data');
+    if (ipDataElement) {
+      ipDataElement.setAttribute('data-editor', 'json');
+      ipDataElement.setAttribute('data-gutter', 'true');
+    }
+    scans.aceEditor();
   },
 };
 
 // Use DOMContentLoaded instead of window.onload for better performance
 document.addEventListener('DOMContentLoaded', () => {
-  // logins.initAce();
+  logins.initAce();
   logins.initHighlights();
 });
