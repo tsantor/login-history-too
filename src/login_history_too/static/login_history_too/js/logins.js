@@ -1,11 +1,6 @@
-/*global $, django, ace, hljs */
 'use strict';
 
-if (!$) {
-  $ = django.jQuery;
-}
-
-var scans = {
+const logins = {
   /**
    * aceEditor
    *
@@ -15,71 +10,97 @@ var scans = {
     ace.config.set('basePath', '/static/js/ace-builds');
 
     function prettifyJSON(string, indent = 2) {
-      var obj = JSON.parse(string);
-      return JSON.stringify(obj, null, indent);
+      try {
+        const obj = JSON.parse(string);
+        return JSON.stringify(obj, null, indent);
+      } catch (e) {
+        console.error('Error parsing JSON:', e);
+        return string;
+      }
     }
 
-    $('textarea[data-editor]').each(function () {
+    const textareas = document.querySelectorAll('textarea[data-editor]');
+    textareas.forEach((textarea) => {
       // Create a div for ace editor
-      var textarea = $(this);
-      var mode = textarea.data('editor');
-      var editDiv = $('<div>', {
-        position: 'absolute',
-        width: '100%',
-        height: textarea.height() + 15,
-      }).insertBefore(textarea);
-      textarea.css('display', 'none');
+      const mode = textarea.dataset.editor;
+      const editDiv = document.createElement('div');
 
-      var pretty = prettifyJSON(textarea.val());
+      // Set styles directly
+      editDiv.style.position = 'absolute';
+      editDiv.style.width = '100%';
+      editDiv.style.height = `${textarea.offsetHeight + 15}px`;
+
+      // Insert before textarea
+      textarea.parentNode.insertBefore(editDiv, textarea);
+      textarea.style.display = 'none';
+
+      // Try to prettify the JSON
+      const pretty = prettifyJSON(textarea.value);
 
       // Create ace editor
-      var editor = ace.edit(editDiv[0]);
+      const editor = ace.edit(editDiv);
       editor.setAutoScrollEditorIntoView(true);
-      editor.renderer.setShowGutter(textarea.data('gutter'));
+      editor.renderer.setShowGutter(textarea.dataset.gutter === 'true');
       editor.renderer.setShowPrintMargin(false);
       editor.getSession().setValue(pretty);
-      editor.getSession().setMode('ace/mode/' + mode);
+      editor.getSession().setMode(`ace/mode/${mode}`);
       editor.getSession().setTabSize(2);
       editor.getSession().setUseWrapMode(true);
       editor.setTheme('ace/theme/chrome');
 
-      // copy back to textarea on form submit...
-      textarea.closest('form').submit(function () {
-        textarea.val(editor.getSession().getValue());
-      });
+      // Copy back to textarea on form submit
+      const form = textarea.closest('form');
+      if (form) {
+        form.addEventListener('submit', () => {
+          textarea.value = editor.getSession().getValue();
+        });
+      }
     });
   },
+
   initHighlights: function () {
-    let elems = [];
-    let el = document
-      .querySelectorAll('div.field-ua_data')[0]
-      .querySelectorAll('div.readonly')[0];
-    el.style.padding = '6px';
-    elems.push(el);
+    const uaDataField = document.querySelector('div.field-ua_data');
+    const ipDataField = document.querySelector('div.field-ip_data');
+    const elementsToHighlight = [];
 
-    el = document
-      .querySelectorAll('div.field-ip_data')[0]
-      .querySelectorAll('div.readonly')[0];
-    el.style.padding = '6px';
-    elems.push(el);
+    if (uaDataField) {
+      const uaReadonly = uaDataField.querySelector('div.readonly');
+      if (uaReadonly) {
+        uaReadonly.style.padding = '6px';
+        elementsToHighlight.push(uaReadonly);
+      }
+    }
 
-    elems.forEach((el) => {
+    if (ipDataField) {
+      const ipReadonly = ipDataField.querySelector('div.readonly');
+      if (ipReadonly) {
+        ipReadonly.style.padding = '6px';
+        elementsToHighlight.push(ipReadonly);
+      }
+    }
+
+    elementsToHighlight.forEach((el) => {
       hljs.highlightElement(el);
     });
   },
+
   initAce: function () {
-    // document.getElementById('id_ua_data').setAttribute('data-editor', 'json');
-    // document.getElementById('id_ua_data').setAttribute('data-gutter', true);
-    // document.getElementById('id_ip_data').setAttribute('data-editor', 'json');
-    // document.getElementById('id_ip_data').setAttribute('data-gutter', true);
+    // const uaDataElement = document.getElementById('id_ua_data');
+    // if (uaDataElement) {
+    //   uaDataElement.setAttribute('data-editor', 'json');
+    //   uaDataElement.setAttribute('data-gutter', 'true');
+    // }
+    // const ipDataElement = document.getElementById('id_ip_data');
+    // if (ipDataElement) {
+    //   ipDataElement.setAttribute('data-editor', 'json');
+    //   ipDataElement.setAttribute('data-gutter', 'true');
+    // }
     // scans.aceEditor();
   },
 };
 
-window.onload = function () {
-  scans.initAce();
-  scans.initHighlights();
-};
-
-// document.addEventListener('DOMContentLoaded', (event) => {
-// });
+// Use DOMContentLoaded instead of window.onload for better performance
+document.addEventListener('DOMContentLoaded', () => {
+  // logins.initAce();
+  logins.initHighlights();
+});

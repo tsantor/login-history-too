@@ -81,10 +81,10 @@ serve:  ## Run server
 # -----------------------------------------------------------------------------
 
 pytest:  ## Run tests
-	pytest -vx
+	uv run pytest -vx
 
 pytest_verbose:  ## Run tests in verbose mode
-	pytest -vs
+	uv run pytest -vs
 
 coverage:  ## Run tests with coverage
 	coverage run -m pytest && coverage html
@@ -151,10 +151,13 @@ twine_upload_test: dist ## Upload package to pypi test
 	uv run twine upload dist/* -r pypitest
 
 twine_upload: dist ## Package and upload a release
-	twine upload dist/*
+	uv run twine upload dist/*
 
 twine_check: dist ## Twine check
-	twine check dist/*
+	uv run twine check dist/*
+
+check_package_data: dist ## Check package data
+	unzip -l dist/*.whl | grep static
 
 # END - Generic commands
 # -----------------------------------------------------------------------------
